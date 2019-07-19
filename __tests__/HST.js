@@ -16,4 +16,8 @@ it("tests that the province \"asdf\" throws an exception", ()=>{
     catch(e){
         expect(e.toString()).toBe("invalid province");
     }
+});
+
+it("tests that the province of Manitoba's tax is correct", ()=>{
+    expect(HST.calculate("MB", 10)).toBe(1.3);
 })

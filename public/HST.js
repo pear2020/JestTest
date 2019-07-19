@@ -4,6 +4,7 @@ class HST{
         let rc = 0;
         switch(sProv){
             case "ON":
+            case "MB":
                 rc = nAmt *.13;
                 break;
             case "AB":
@@ -12,7 +13,7 @@ class HST{
             default:
                 throw "invalid province";
         }
-        return rc;
+        return Number(rc.toFixed(2));
     }
 }
 
