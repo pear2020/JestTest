@@ -7,7 +7,7 @@ npm test
 
 ```
 
-Runs the tests in the __tests__ folder.
+Runs the tests in the `__tests__` folder.
 
 ```
 
