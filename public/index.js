@@ -1,15 +1,17 @@
-import Framework7 from 'framework7/framework7.esm.bundle'
-import $$ from 'dom7';
+import Framework7 from 'framework7/framework7-bundle'
 const HST = require("./HST.js"); 
 
+// If your using custom DOM library, then save it to $$ variable
+const $$ = Dom7;
+
 // Init F7
-const app = new Framework7({
-  root: '#app',
-  theme: 'auto',
-  // Fix for iPhone X notch
-  statusbar: {
-    overlay: Framework7.device.ios ? Framework7.device.webView || Framework7.device.cordova : 'auto',
-  },
+const app = new Framework7();
+
+// Add the view
+app.view.create('#app', {
+
+  // enable the dynamic navbar for this view:
+  dynamicNavbar: true
 });
 
 let nSubtotal = 0;
