@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "test driven development",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "start": "parcel --no-hmr public/index.html"
   },
   "keywords": [
@@ -15,7 +16,7 @@
   "author": "Rich Hildred",
   "license": "MIT",
   "devDependencies": {
-    "jest": "*",
+    "jest": "^27.5.1",
     "parcel-bundler": "*"
   },
   "dependencies": {

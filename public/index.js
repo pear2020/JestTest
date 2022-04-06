@@ -1,29 +1,54 @@
-import Framework7 from 'framework7/framework7-bundle'
-const HST = require("./HST.js"); 
 
-// If your using custom DOM library, then save it to $$ variable
-const $$ = Dom7;
+import IncomeTax from "./IncomeTax.js"; 
+// $$("#adding").on("submit", evt=>{
+//   evt.preventDefault();
+//   const oData = app.form.convertToData("#adding")
+//   //alert("adding: " + oData.amount);
+//   nSubtotal += Number(oData.amount);
+//   const nHst = HST.calculate("ON", nSubtotal);
+//   $$("#hst").html(nHst);
+//   $$("#total").html(nHst + nSubtotal);
+//   $$("#subtotal").html(nSubtotal);
+//   $$("#amounts").prepend("<p>"+ oData.amount + "</p>");
+// });
 
-// Init F7
-const app = new Framework7();
+import "https://code.jquery.com/jquery-1.12.1.min.js";
 
-// Add the view
-app.view.create('#app', {
+$(document).ready(()=>{
+    var inputs = $("form :input");
+    $(inputs).keypress(function(e){
+	    if (e.keyCode == 13){
+		    inputs[inputs.index(this)+1].focus();
+	    }
+    });
 
-  // enable the dynamic navbar for this view:
-  dynamicNavbar: true
-});
+    $("#deducted").keypress(function(e){
+	    if (e.keyCode == 13){
+        const nincome = $("#income").val();
+        const oTax = new IncomeTax();
+        const ontarioTax = oTax.ontarioTax(nincome);
+        const ferderalTax =  oTax.federalTax(nincome);
+        var nTax = ontarioTax + ferderalTax;
+        const deductable = $("#deducted").val();
+        $("#OntarioTax").html(ontarioTax);
+        $("#FederalTax").html(ferderalTax);
+        $("#total").html(nTax);
+        $("#owing").html((nTax-deductable).toFixed(2));
+	    }
+    });
 
-let nSubtotal = 0;
+    $("#calculateON").click((evt)=>{
+        evt.preventDefault();
+        const nincome = $("#income").val();
+        const oTax = new IncomeTax();
+        $("#OntarioTax").html(oTax.ontarioTax(nincome));
+    })
 
-$$("#adding").on("submit", evt=>{
-  evt.preventDefault();
-  const oData = app.form.convertToData("#adding")
-  //alert("adding: " + oData.amount);
-  nSubtotal += Number(oData.amount);
-  const nHst = HST.calculate("ON", nSubtotal);
-  $$("#hst").html(nHst);
-  $$("#total").html(nHst + nSubtotal);
-  $$("#subtotal").html(nSubtotal);
-  $$("#amounts").prepend("<p>"+ oData.amount + "</p>");
+    $("#calculateFe").click((evt)=>{
+      evt.preventDefault();
+      const nincome = $("#income").val();
+      const oTax = new IncomeTax();
+      $("#FederalTax").html(oTax.federalTax(nincome));
+    })
+
 });
